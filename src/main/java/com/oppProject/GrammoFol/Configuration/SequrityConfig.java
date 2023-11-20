@@ -23,6 +23,9 @@ public class SequrityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/",
+                        "/index",
+                        "/js/**",
+                        "/css/**",
                         "/shop/**",
                         "/register/**",
                         "/my-sql/**"

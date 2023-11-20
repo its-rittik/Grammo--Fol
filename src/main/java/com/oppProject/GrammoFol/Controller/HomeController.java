@@ -20,6 +20,10 @@ public class HomeController {
         model.addAttribute("cartCount", GlobalData.cart.size());
         return "index";
     }
+    @GetMapping("/review")
+    public  String review(Model model){
+        return "review";
+    }
     @GetMapping("/shop")
     public  String shop(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());

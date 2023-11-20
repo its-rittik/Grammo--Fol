@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammo-Fol</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css"
+          integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" th:href="@{/images/logo.png}" type="image/icon type">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Abril+Fatface);
+        @import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-size: 16px;
+            line-height: 1em;
+            background-color: black;
+        }
+
+        .rating {
+            color: #ffc107;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .rating i {
+            margin-right: 5px;
+        }
+
+        #titles li img {
+            position: absolute;
+            top: 245px;
+            left: 95px;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        #slides {
+            position: absolute;
+            top: 17%;
+            left: 10%;
+            right: 48%;
+            bottom: 17%;
+            overflow: hidden;
+        }
+
+        #slides ul {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        #slides ul li {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #slides ul li:nth-child(1) {
+            background-color: #131313;
+        }
+
+        #slides ul li:nth-child(2) {
+            background-color: #262626;
+        }
+
+        #slides ul li:nth-child(3) {
+            background-color: #393939;
+        }
+
+        #slides ul li:nth-child(4) {
+            background-color: #262626;
+        }
+
+        #slides ul li:nth-child(5) {
+            background-color: #131313;
+        }
+
+        ul#steps {
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            height: 110px;
+            margin-top: -55px;
+        }
+
+        ul#steps li {
+            position: relative;
+            height: 100%;
+            color: #999;
+            font-family: "Abril Fatface", serif;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-transition: color 666ms cubic-bezier(0.666, 0, 0.333, 1), font-size 666ms cubic-bezier(0.666, 0, 0.333, 1);
+            transition: color 666ms cubic-bezier(0.666, 0, 0.333, 1), font-size 666ms cubic-bezier(0.666, 0, 0.333, 1);
+        }
+
+        ul#steps li.active {
+            color: #bf482c;
+            font-size: 96px;
+        }
+
+        #titles {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            width: 60%;
+            height: 330px;
+            margin-top: -165px;
+            padding: 110px 0;
+        }
+
+        #titles ul {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        #titles li {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            opacity: 0;
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            -webkit-transition: visibility 0ms linear 666ms, opacity 666ms cubic-bezier(0.666, 0, 0.333, 1);
+            transition: visibility 0ms linear 666ms, opacity 666ms cubic-bezier(0.666, 0, 0.333, 1);
+        }
+
+        #titles li.active {
+            visibility: visible;
+            opacity: 1;
+            -webkit-transition: visibility 0ms linear, opacity 666ms cubic-bezier(0.666, 0, 0.333, 1);
+            transition: visibility 0ms linear, opacity 666ms cubic-bezier(0.666, 0, 0.333, 1);
+        }
+
+        #titles li h2 {
+            height: 110px;
+            font-family: "Abril Fatface", serif;
+            font-size: 96px;
+            display: block;
+        }
+
+        #titles li p {
+            height: auto;
+            width: auto;
+            color: #999;
+            white-space: pre-line;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        @media screen and (min-width: 768px) {
+            #titles li p {
+                max-width: 400px; /* Adjust the max-width as needed */
+            }
+        }
+
+        .roller {
+            -webkit-transform: translate3d(0, 0%, 0);
+            transform: translate3d(0, 0%, 0);
+            -webkit-transition: -webkit-transform 666ms cubic-bezier(0.666, 0, 0.333, 1);
+            transition: -webkit-transform 666ms cubic-bezier(0.666, 0, 0.333, 1);
+            transition: transform 666ms cubic-bezier(0.666, 0, 0.333, 1);
+            transition: transform 666ms cubic-bezier(0.666, 0, 0.333, 1), -webkit-transform 666ms cubic-bezier(0.666, 0, 0.333, 1);
+        }
+
+        /*    new*/
+
+        .container {
+            max-width: 100%;
+            margin: auto;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        nav {
+            flex: 1;
+            text-align: right;
+        }
+
+        nav ul {
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #555;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .col-2 {
+            flex-basis: 50%;
+            min-width: 300px;
+        }
+
+        .col-2 img {
+            max-width: 100%;
+            padding: 50px 0;
+        }
+
+        .col-2 h1 {
+            font-size: 50px;
+            line-height: 60px;
+            margin: 25px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff523b;
+            color: #fff;
+            padding: 8px 30px;
+            margin: 30px 0;
+            border-radius: 30px;
+            transition: background 0.5s;
+        }
+
+        .btn:hover {
+            background: #563434;
+        }
+
+        .header .row {
+            margin-top: 70px;
+        }
+
+        .catagories {
+            margin: 70px 0;
+        }
+
+        .col-3 {
+            flex-basis: 30%;
+            min-height: 250px;
+            margin-bottom: 30px;
+        }
+
+        .col-3 img {
+            width: 100%;
+        }
+
+        .small-container {
+            max-width: 1080px;
+            margin: auto;
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        .col-4 {
+            flex-basis: 25%;
+            padding: 10PX;
+            min-width: 200px;
+            margin-bottom: 50px;
+            transition: transform 0.5s;
+        }
+
+        .col-4 img {
+            width: 100%;
+        }
+
+        .title {
+            text-align: center;
+            margin: 0 auto 80px;
+            position: relative;
+            line-height: 60px;
+            color: #555;
+        }
+
+        .title::after {
+            content: '';
+            background: #ff523b;
+            width: 80px;
+            height: 5px;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        h4 {
+            color: #555;
+            font-weight: normal;
+        }
+
+        .col-4 p {
+            font-size: 14px;
+        }
+
+        .col-4:hover {
+            transform: translateY(-5px);
+        }
+
+        .offer {
+            margin-top: 80px;
+            padding: 30px 0;
+        }
+
+        small {
+            color: #555;
+        }
+
+        .testimonial {
+            padding-top: 100px;
+        }
+
+        .testimonial .col-3 {
+            text-align: center;
+            padding: 40px 20px;
+            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transform: transform 0.5s;
+        }
+
+        .testimonial .col-3 img {
+            width: 50px;
+            margin-top: 20px;
+            border-radius: 50%;
+        }
+
+        .testimonial .col-3:hover {
+            transform: translateY(-10px);
+        }
+
+        .fas.fa-quote-left {
+            font-size: 34px;
+            color: #ff523b;
+        }
+
+        .col-3 p {
+            font-size: 12px;
+            margin: 12px 0;
+            color: #777;
+        }
+
+        .testimonial .col-3 h3 {
+            font-weight: 600;
+            color: #555;
+            font-size: 16;
+        }
+
+        /* media query */
+
+        @media only screen and (max-width: 800px) {
+            nav ul {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #333;
+                width: 100%;
+                overflow: hidden;
+                transition: max-height 0.5s;
+            }
+
+            nav ul li {
+                display: block;
+                margin-right: 50px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            nav ul li a {
+                color: #fff;
+            }
+
+            .menu-icon {
+                display: block;
+                cursor: pointer;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .row {
+                text-align: center;
+            }
+
+            .col-2, .col-3, .col-4 {
+                flex-basis: 100%;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <img th:src="@{/images/logo.png}" width="80px">
+            </div>
+            <nav>
+                <ul id="MenuItems">
+                    <li>
+                        <a class="nav-link" th:href="@{/}" href="#">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" th:href="@{/shop}" href="#">Products</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">Login</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="small-container">
+    <div id="slides">
+        <ul class="roller">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <ul id="steps" class="roller">
+        <li>01</li>
+        <li>02</li>
+        <li>03</li>
+        <li>04</li>
+        <li>05</li>
+    </ul>
+    <div id="titles">
+        <ul class="roller">
+            <li>
+                <h2>Sarbajit</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <p>I recently discovered this fantastic Bangladeshi fruit ecommerce platform, and I'm hooked!
+                    The
+                    variety of
+                    fresh fruits they offer is simply incredible. From juicy mangoes to ripe guavas, every piece
+                    is a
+                    burst of
+                    flavor.</p>
+                <img th:src="@{/images/person-1.jpg}" alt="">
+            </li>
+            <li>
+                <h2>Maruf</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p>The ordering process is a breeze, and the fruits are delivered right to my doorstep in
+                    perfect
+                    condition. The
+                    attention to quality is evident, and I appreciate the effort they put into ensuring that
+                    each fruit
+                    is at its
+                    peak freshness.</p>
+                <img th:src="@{/images/person-2.png}" alt="">
+            </li>
+            <li>
+                <h2>Zoti</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <p>Not only are the fruits top-notch, but the customer service is also exceptional. Any
+                    questions or
+                    concerns I
+                    had were promptly addressed, making the overall shopping experience delightful.</p>
+
+                <img th:src="@{/images/person-3.jpg}" alt="">
+            </li>
+            <li>
+                <h2>Rittik</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <i class="far fa-star"></i>
+                </div>
+                <p>I highly recommend this platform to fellow fruit enthusiasts. It's a convenient way to enjoy
+                    the best
+                    of
+                    Bangladeshi fruits without leaving the comfort of your home. Happy shopping!</p>
+
+                <img th:src="@{/images/person-4.jpg}" alt="">
+            </li>
+            <li>
+                <h2>Chayanika</h2>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>I highly recommend this platform to fellow fruit enthusiasts. It's a convenient way to enjoy
+                    the best
+                    of
+                    Bangladeshi fruits without leaving the comfort of your home. Happy shopping!</p>
+
+                <img th:src="@{/images/person-5.jpg}" alt="">
+            </li>
+        </ul>
+    </div>
+</div>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
+
+<script>
+    (function () {
+        var Application, Utils,
+            bind = function (fn, me) {
+                return function () {
+                    return fn.apply(me, arguments);
+                };
+            };
+
+        window.DEMO = window.DEMO || {};
+
+        Utils = {
+            'transform': Modernizr.prefixed('transform').replace(/([A-Z])/g, (function (_this) {
+                return function (str, m1) {
+                    return '-' + m1.toLowerCase();
+                };
+            })(this)).replace(/^ms-/, '-ms-'),
+            'translate': (function (_this) {
+                return function (x, y) {
+                    var tran, vals;
+                    tran = Modernizr.csstransforms3d ? 'translate3d' : 'translate';
+                    vals = Modernizr.csstransforms3d ? '(' + x + ', ' + y + ', 0)' : '(' + x + ', ' + y + ')';
+                    return tran + vals;
+                };
+            })(this)
+        };
+
+        Application = (function () {
+            function Application() {
+                this.update = bind(this.update, this);
+                this.next = bind(this.next, this);
+                this.previous = bind(this.previous, this);
+                this.onKeyup = bind(this.onKeyup, this);
+                DEMO.utils = Utils;
+                this.$doc = $(document);
+                this.$roller = $('.roller');
+                this.$step = $('#steps li');
+                this.$title = $('#titles li');
+                this.min = 0;
+                this.max = this.$step.length - 1;
+                this.active_index = 0;
+                this.$step.eq(this.active_index).addClass('active');
+                this.$title.eq(this.active_index).addClass('active');
+                this.observe();
+            }
+
+            Application.prototype.observe = function () {
+                return this.$doc.on('keyup', this.onKeyup);
+            };
+
+            Application.prototype.onKeyup = function (e) {
+                var kc;
+                kc = e.keyCode;
+                if (kc === 38) {
+                    e.preventDefault();
+                    this.previous();
+                }
+                if (kc === 40) {
+                    e.preventDefault();
+                    return this.next();
+                }
+            };
+
+            Application.prototype.previous = function () {
+                if (this.active_index > this.min) {
+                    this.active_index--;
+                    return this.update();
+                }
+            };
+
+            Application.prototype.next = function () {
+                if (this.active_index < this.max) {
+                    this.active_index++;
+                    return this.update();
+                }
+            };
+
+            Application.prototype.update = function () {
+                var y;
+                y = -(this.active_index * 100);
+                this.$roller.css(DEMO.utils.transform, DEMO.utils.translate(0, y + "%"));
+                this.$step.removeClass('active');
+                this.$title.removeClass('active');
+                this.$step.eq(this.active_index).addClass('active');
+                return this.$title.eq(this.active_index).addClass('active');
+            };
+
+            return Application;
+
+        })();
+
+        $(function () {
+            return DEMO.instance = new Application();
+        });
+
+    }).call(this);
+</script>
+</body>
+
+</html>

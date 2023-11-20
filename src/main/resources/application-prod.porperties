@@ -1,0 +1,6 @@
+spring.datasource.url=jdbc:mysql://viaduct.proxy.rlwy.net:25968/railway
+spring.datasource.username=root
+spring.datasource.password=G-CAF5C2Cf5D52hF335G-F6ah631bh55
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false

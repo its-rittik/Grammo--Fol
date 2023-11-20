@@ -20,5 +20,15 @@ public class Product {
     private String description;
     private String imageName;
 
+    private int itemCount;
+
+    // constructor, getters, setters, and other methods...
+
+    public void decreaseItemCount() {
+        // Ensure the item count is greater than 0 before decrementing
+        if (itemCount > 0) {
+            itemCount--;
+        }
+    }
 }
 
